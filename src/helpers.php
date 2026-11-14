@@ -259,3 +259,15 @@ function event_card_json(array $e): array
         'sold_out'   => (int) $e['capacity'] > 0 && (int) $e['sold'] >= (int) $e['capacity'],
     ];
 }
+
+function status_tag(string $status, string $phase): string
+{
+    [$label, $cls] = match (true) {
+        $status === 'cancelled' => ['Cancelled', 'tag-red'],
+        $status === 'draft'     => ['Draft', 'tag-grey'],
+        $phase === 'past'       => ['Ended', 'tag-grey'],
+        $phase === 'live'       => ['Live now', 'tag-live'],
+        default                 => ['On sale', 'tag-green'],
+    };
+    return '<span class="tag ' . $cls . '">' . $label . '</span>';
+}
