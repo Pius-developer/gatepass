@@ -1,0 +1,6 @@
+/config.local.php
+data/*.sqlite*
+data/*.log
+public_html/uploads/*
+!public_html/uploads/.htaccess
+.DS_Store
