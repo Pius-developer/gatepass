@@ -3,7 +3,7 @@
     <div class="wrap hero-grid">
         <div>
             <p class="eyebrow">Tickets for your events</p>
-            <h1>Sell tickets.<br>Scan them at the gate.<br><span class="hl">That's it.</span></h1>
+            <h1>Sell tickets.<br>Scan them<br>at the gate. <span class="hl">Done.</span></h1>
             <p class="lede">Create an event in two minutes, share your link and get paid with Paystack. Buyers get QR tickets by email with a reminder for their phone. On the day, your phone becomes the door scanner.</p>
             <div class="actions">
                 <a class="btn btn-lg" href="<?= $me ? '/events/new' : '/signup' ?>">Create your event</a>
