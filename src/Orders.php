@@ -83,7 +83,8 @@ final class Orders
     /**
      * Mark an order paid and issue its tickets. Safe to call twice (Paystack's
      * redirect and its webhook can both arrive): the second call changes nothing.
-     * Returns the order, or null if the reference is unknown or the amount is wrong.
+     * Returns the order (with just_paid = true only for the call that paid it, so the
+     * ticket email goes out once), or null if the reference is unknown or the amount is wrong.
      */
     public function markPaid(string $reference, int $amountPaid, string $provider): ?array
     {
@@ -93,7 +94,7 @@ final class Orders
                 return null;
             }
             if ($order['status'] === 'paid') {
-                return $order;
+                return $order + ['just_paid' => false];
             }
             if ($amountPaid !== (int) $order['total']) {
                 return null;   // never trust a payment for a different amount
@@ -108,7 +109,7 @@ final class Orders
                     $ins->execute([$order['id'], $item['ticket_type_id'], $this->newCode()]);
                 }
             }
-            return $this->findByReference($reference);
+            return $this->findByReference($reference) + ['just_paid' => true];
         });
     }
 
