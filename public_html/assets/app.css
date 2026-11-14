@@ -298,6 +298,7 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .total strong.bump { animation: bump .3s ease; }
 @keyframes bump { 40% { transform: scale(1.08); color: var(--brand); } }
 .secure { margin-top: 12px; }
+.mobile-cta { display: none; }
 .soldout { font: 800 28px/1 var(--display); color: var(--ink); margin-bottom: 8px; }
 
 /* ---- Buyer tickets ---------------------------------------------------------- */
@@ -427,6 +428,8 @@ fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
     .ep-grid, .ef-grid { grid-template-columns: 1fr; }
     .sticky { position: static; }
     .dash-grid { grid-template-columns: 1fr; }
+    .mobile-cta { display: flex; position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 6; box-shadow: 0 12px 30px rgba(0,0,0,.25); }
+    .event-page { padding-bottom: 60px; }
 }
 @media (max-width: 860px) {
     .hero { padding-top: 44px; }

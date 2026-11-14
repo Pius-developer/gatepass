@@ -11,6 +11,8 @@ $url = base_url() . '/e/' . $event['slug'];
     <div class="wrap"><p class="flash">You're the organizer. <a href="/events/<?= (int) $event['id'] ?>">Manage this event</a> · <a href="/events/<?= (int) $event['id'] ?>/checkin">Open the scanner</a></p></div>
 <?php endif; ?>
 
+<?php if ($selling && $left > 0): ?><?php $from = min(array_column(array_filter($types, fn ($t) => $t['left'] > 0), 'price')); ?>
+    <a class="mobile-cta btn btn-lg" href="#tickets">Get tickets<?= $from > 0 ? ' · from ' . e(money($from)) : '' ?></a><?php endif; ?>
 <article class="wrap event-page">
     <div class="ep-cover"<?= $event['cover'] ? '' : ' style="--h:' . crc32($event['title']) % 360 . '"' ?>>
         <?php if ($event['cover']): ?><img src="<?= e(cover_url($event['cover'])) ?>" alt=""><?php else: ?><span class="card-mono" aria-hidden="true"><?= e(mb_substr($event['title'], 0, 1)) ?></span><?php endif; ?>
@@ -71,7 +73,7 @@ $url = base_url() . '/e/' . $event['slug'];
         </div>
 
         <aside class="ep-side">
-            <form class="buy panel sticky" method="post" action="/e/<?= e($event['slug']) ?>/checkout" data-buy data-max="<?= (int) config('max_per_order') ?>" data-symbol="<?= e(config('currency_symbol')) ?>">
+            <form class="buy panel sticky" id="tickets" method="post" action="/e/<?= e($event['slug']) ?>/checkout" data-buy data-max="<?= (int) config('max_per_order') ?>" data-symbol="<?= e(config('currency_symbol')) ?>">
                 <?= csrf_field() ?>
                 <h2>Tickets</h2>
                 <?php if ($error): ?><p class="alert" role="alert"><?= e($error) ?></p><?php endif; ?>
