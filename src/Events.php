@@ -30,12 +30,22 @@ final class Events
     /** Event plus its organizer's public details. */
     public function findBySlug(string $slug): ?array
     {
+        return $this->findWithHost('e.slug = ?', $slug);
+    }
+
+    public function findWithHostById(int $id): ?array
+    {
+        return $this->findWithHost('e.id = ?', $id);
+    }
+
+    private function findWithHost(string $where, string|int $value): ?array
+    {
         $s = $this->db->prepare(
-            'SELECT e.*, u.username, u.name AS host_name, u.bio AS host_bio
+            "SELECT e.*, u.username, u.name AS host_name, u.bio AS host_bio, u.email AS host_email
                FROM events e JOIN users u ON u.id = e.user_id
-              WHERE e.slug = ?'
+              WHERE $where"
         );
-        $s->execute([$slug]);
+        $s->execute([$value]);
         return $s->fetch() ?: null;
     }
 
