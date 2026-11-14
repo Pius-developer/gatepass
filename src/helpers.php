@@ -241,3 +241,21 @@ function event_phase(array $event): string
     if (strtotime($event['starts_at'] . ' UTC') <= $now) return 'live';
     return 'upcoming';
 }
+
+/** The fields an event card needs (server-rendered cards and the Explore JSON use the same data). */
+function event_card_json(array $e): array
+{
+    return [
+        'url'        => '/e/' . $e['slug'],
+        'title'      => $e['title'],
+        'when'       => event_when($e),
+        'month'      => local_time($e['starts_at'], $e['timezone'], 'M'),
+        'day'        => local_time($e['starts_at'], $e['timezone'], 'j'),
+        'venue'      => $e['venue'] !== '' ? $e['venue'] : 'Online',
+        'host'       => $e['host_name'],
+        'cover'      => cover_url($e['cover']),
+        'hue'        => crc32($e['title']) % 360,   // colour for events without a cover
+        'price'      => $e['from_price'] === null ? '' : ((int) $e['from_price'] === 0 ? 'Free' : 'From ' . money($e['from_price'])),
+        'sold_out'   => (int) $e['capacity'] > 0 && (int) $e['sold'] >= (int) $e['capacity'],
+    ];
+}
