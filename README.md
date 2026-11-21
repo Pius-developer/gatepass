@@ -94,7 +94,6 @@ With no Paystack keys and the default `log` mail driver, payments use the demo c
 | `views/` | Page templates; `views/emails/` holds the emails |
 | `tests/run.php` | Tests |
 
-Deploying: see [DEPLOY.md](DEPLOY.md).
 
 ## Credits
 
